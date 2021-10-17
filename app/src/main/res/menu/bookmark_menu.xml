@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/saved_articles"
+        android:icon="@drawable/ic_baseline_bookmarks_24"
+        app:iconTint="@color/black"
+        app:showAsAction="ifRoom"
+        android:title="@string/bookmark" />
+</menu>

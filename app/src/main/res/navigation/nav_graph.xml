@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/newsViewPagerFragment">
+
+    <fragment
+        android:id="@+id/newsViewPagerFragment"
+        android:name="com.zivapp.newsapplication.ui.fragments.news.home.NewsViewPagerFragment"
+        android:label="NewsViewPagerFragment" >
+        <action
+            android:id="@+id/action_newsViewPagerFragment_to_newsDetailsFragment"
+            app:destination="@id/newsDetailsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popEnterAnim="@android:anim/fade_in" />
+        <action
+            android:id="@+id/action_newsViewPagerFragment_to_newsBookmarkFragment"
+            app:destination="@id/newsBookmarkFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popEnterAnim="@android:anim/fade_in" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsDetailsFragment"
+        android:name="com.zivapp.newsapplication.ui.fragments.news.details.NewsDetailsFragment"
+        android:label="NewsDetailsFragment" >
+        <argument
+            android:name="article"
+            app:argType="com.zivapp.newsapplication.models.ArticlesDto" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsBookmarkFragment"
+        android:name="com.zivapp.newsapplication.ui.fragments.news.savedNews.NewsBookmarkFragment"
+        android:label="NewsBookmarkFragment" >
+        <action
+            android:id="@+id/action_newsBookmarkFragment_to_newsDetailsFragment"
+            app:destination="@id/newsDetailsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popEnterAnim="@android:anim/fade_in" />
+    </fragment>
+</navigation>

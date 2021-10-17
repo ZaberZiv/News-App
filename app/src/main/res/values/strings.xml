@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">NewsApplication</string>
+
+    <string name="tab_top_headlines">Top headlines</string>
+    <string name="tab_everything">Everything</string>
+    <string name="page_error_message">Failed to load data</string>
+    <string name="btn_retry">Retry</string>
+    <string name="empty_list">List is empty</string>
+    <string name="no_result">Add articles here to read later</string>
+    <string name="details_news">About: %s</string>
+    <string name="author_news">Author: %s</string>
+    <string name="author_unknown">unknown</string>
+    <string name="publish_date_news">Publish Date: %s</string>
+    <string name="read_in_browser">%s</string>
+    <string name="link_to_read">Continue to read an article</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="bookmark">bookmark</string>
+
+</resources>
