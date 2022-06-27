@@ -79,4 +79,7 @@ dependencies {
 
     // Coil for images
     implementation "io.coil-kt:coil:1.2.1"
+
+    // Koin
+    implementation "io.insert-koin:koin-android:3.2.0"
 }

@@ -4,21 +4,19 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.zivapp.newsapplication.R
 import com.zivapp.newsapplication.databinding.FragmentNewsDetailsBinding
 import com.zivapp.newsapplication.models.ArticlesDto
-import com.zivapp.newsapplication.ui.activity.MainActivity
 import com.zivapp.newsapplication.ui.fragments.news.NewsViewModel
 import com.zivapp.newsapplication.utils.*
 import kotlinx.coroutines.flow.collect
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsDetailsFragment : Fragment(),
     ViewBindingHolder<FragmentNewsDetailsBinding> by ViewBindingHolderImpl() {
@@ -27,7 +25,7 @@ class NewsDetailsFragment : Fragment(),
 
     private val article: ArticlesDto by lazy { args.value.article }
 
-    private val viewModel: NewsViewModel by lazy { (activity as MainActivity).newsViewModel }
+    private val viewModel by viewModel<NewsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -5,17 +5,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.zivapp.newsapplication.models.ArticlesDto
-import com.zivapp.newsapplication.repository.RepositoryImpl
+import com.zivapp.newsapplication.repository.NewsRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class NewsViewModel(private val repo: RepositoryImpl) : ViewModel() {
-
+class NewsViewModel(
+    private val repo: NewsRepository,
+) : ViewModel() {
 
     fun getTopHeadlinesNews(query: String): Flow<PagingData<ArticlesDto>> {
         return repo.getTopHeadlinesNews(query)

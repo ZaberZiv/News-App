@@ -14,14 +14,14 @@ import com.zivapp.newsapplication.utils.ArticleSeparator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class RepositoryImpl(
+class NewsRepositoryImpl(
     private val service: NetworkServiceApi,
     dataBase: AppDatabase,
-) {
+) : NewsRepository {
 
     private val articleDao = dataBase.articleDao()
 
-    fun getTopHeadlinesNews(
+    override fun getTopHeadlinesNews(
         query: String,
     ): Flow<PagingData<ArticlesDto>> {
         return Pager(
@@ -38,7 +38,7 @@ class RepositoryImpl(
             }
     }
 
-    fun getEverythingNews(
+    override fun getEverythingNews(
         query: String,
     ): Flow<PagingData<ArticlesDto>> {
         return Pager(
@@ -56,19 +56,19 @@ class RepositoryImpl(
             }
     }
 
-    suspend fun insertArticle(articlesDto: ArticlesDto) {
+    override suspend fun insertArticle(articlesDto: ArticlesDto) {
         articleDao.insertArticle(articlesDto)
     }
 
-    fun getArticles(): Flow<List<ArticlesDto>> {
+    override fun getArticles(): Flow<List<ArticlesDto>> {
         return articleDao.getArticles()
     }
 
-    fun getArticleByUrl(url: String): Flow<ArticlesDto?> {
+    override fun getArticleByUrl(url: String): Flow<ArticlesDto?> {
         return articleDao.getArticleByUrl(url)
     }
 
-    suspend fun deleteArticle(url: String) {
+    override suspend fun deleteArticle(url: String) {
         articleDao.deleteArticle(url)
     }
 }

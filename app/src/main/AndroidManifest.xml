@@ -10,6 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".ui.app.App"
         android:theme="@style/Theme.NewsApplication">
         <activity
             android:name=".ui.activity.MainActivity"

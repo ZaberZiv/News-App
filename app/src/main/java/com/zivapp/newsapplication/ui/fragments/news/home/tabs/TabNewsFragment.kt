@@ -1,11 +1,11 @@
 package com.zivapp.newsapplication.ui.fragments.news.home.tabs
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zivapp.newsapplication.R
 import com.zivapp.newsapplication.databinding.FragmentTabNewsBinding
-import com.zivapp.newsapplication.ui.activity.MainActivity
 import com.zivapp.newsapplication.ui.adapters.recyclerAdapters.NewsAdapter
 import com.zivapp.newsapplication.ui.fragments.news.NewsViewModel
 import com.zivapp.newsapplication.ui.paging.pagingAdapter.LoaderStateAdapter
@@ -21,13 +20,15 @@ import com.zivapp.newsapplication.utils.ViewBindingHolder
 import com.zivapp.newsapplication.utils.ViewBindingHolderImpl
 import com.zivapp.newsapplication.utils.setupSwipeRefresh
 import kotlinx.coroutines.flow.collectLatest
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TabNewsFragment(private val _filter: Int) : Fragment(),
     ViewBindingHolder<FragmentTabNewsBinding> by ViewBindingHolderImpl() {
 
-    private val viewModel: NewsViewModel by lazy { (activity as MainActivity).newsViewModel }
+    private val viewModel by viewModel<NewsViewModel>()
 
-    private val newsAdapter: NewsAdapter by lazy { NewsAdapter() }
+    private val newsAdapter: NewsAdapter by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
