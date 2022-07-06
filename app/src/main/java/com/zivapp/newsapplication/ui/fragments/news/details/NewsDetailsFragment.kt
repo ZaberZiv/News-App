@@ -13,7 +13,6 @@ import androidx.navigation.fragment.navArgs
 import com.zivapp.newsapplication.R
 import com.zivapp.newsapplication.databinding.FragmentNewsDetailsBinding
 import com.zivapp.newsapplication.models.ArticlesDto
-import com.zivapp.newsapplication.ui.fragments.news.NewsViewModel
 import com.zivapp.newsapplication.utils.*
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,7 +24,7 @@ class NewsDetailsFragment : Fragment(),
 
     private val article: ArticlesDto by lazy { args.value.article }
 
-    private val viewModel by viewModel<NewsViewModel>()
+    private val viewModel by viewModel<NewsDetailsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +34,7 @@ class NewsDetailsFragment : Fragment(),
         this
     ) {
         setupUI()
+        setupListeners(article)
     }
 
     private fun setupUI() = requireBinding {
@@ -69,7 +69,6 @@ class NewsDetailsFragment : Fragment(),
                 DateUtils.formatGMTToUTCDateStr(publishedAt)
             )
             tvLink.movementMethod = LinkMovementMethod.getInstance()
-            setupListeners(this)
         }
     }
 
@@ -91,7 +90,7 @@ class NewsDetailsFragment : Fragment(),
         }
 
     private fun setupListeners(article: ArticlesDto) = requireBinding {
-        tvLink.setOnClickListener { _ ->
+        tvLink.setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
             startActivity(browserIntent)
         }

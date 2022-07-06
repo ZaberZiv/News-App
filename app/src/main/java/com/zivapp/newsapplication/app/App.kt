@@ -1,7 +1,7 @@
-package com.zivapp.newsapplication.ui.app
+package com.zivapp.newsapplication.app
 
 import android.app.Application
-import com.zivapp.newsapplication.di.newsModule
+import com.zivapp.newsapplication.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -12,7 +12,7 @@ class App: Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(newsModule)
+            modules(serviceModule, coroutineModule, viewModelModule, adapterModule)
         }
     }
 }

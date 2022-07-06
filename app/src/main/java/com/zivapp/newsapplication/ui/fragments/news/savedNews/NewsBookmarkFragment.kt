@@ -9,12 +9,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.zivapp.newsapplication.R
 import com.zivapp.newsapplication.databinding.FragmentNewsBookmarkBinding
 import com.zivapp.newsapplication.ui.adapters.recyclerAdapters.SavedNewsAdapter
-import com.zivapp.newsapplication.ui.fragments.news.NewsViewModel
+import com.zivapp.newsapplication.utils.BundleKeys.Companion.ARTICLE
 import com.zivapp.newsapplication.utils.ViewBindingHolder
 import com.zivapp.newsapplication.utils.ViewBindingHolderImpl
 import com.zivapp.newsapplication.utils.setupToolbar
@@ -25,7 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class NewsBookmarkFragment : Fragment(),
     ViewBindingHolder<FragmentNewsBookmarkBinding> by ViewBindingHolderImpl() {
 
-    private val viewModel by viewModel<NewsViewModel>()
+    private val viewModel by viewModel<NewsBookmarkViewModel>()
 
     private val newsAdapter by inject<SavedNewsAdapter>()
 
@@ -36,21 +34,23 @@ class NewsBookmarkFragment : Fragment(),
         FragmentNewsBookmarkBinding.inflate(layoutInflater, container, false),
         this
     ) {
-        setupRecycler()
         setupUi()
+        setupRecycler()
+        setupCollectors()
         setupListeners()
+    }
+
+    private fun setupUi() = requireBinding {
+        toolbar.setupToolbar(this@NewsBookmarkFragment)
     }
 
     private fun setupRecycler() = requireBinding().rvNews.apply {
         adapter = newsAdapter
-        layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
     }
 
-    private fun setupUi() = requireBinding {
-        requireBinding().toolbar.setupToolbar(this@NewsBookmarkFragment)
-
+    private fun setupCollectors() = requireBinding {
         lifecycleScope.launchWhenStarted {
-            viewModel.getArticles().collect { articles ->
+            viewModel.articles.collect { articles ->
                 emptyLayout.isVisible = articles.isEmpty()
                 newsAdapter.differ.submitList(articles)
             }
@@ -61,15 +61,12 @@ class NewsBookmarkFragment : Fragment(),
         newsAdapter.setOnItemClickListener { article ->
             findNavController().navigate(
                 R.id.action_newsBookmarkFragment_to_newsDetailsFragment,
-                bundleOf("article" to article)
+                bundleOf(ARTICLE to article)
             )
         }
 
         newsAdapter.setOnBookmarkClickListener {
-            if (it.isPicked)
-                viewModel.deleteArticle(it.url)
-            else
-                viewModel.insertArticle(it)
+            viewModel.pickedArticle(it)
         }
     }
 }

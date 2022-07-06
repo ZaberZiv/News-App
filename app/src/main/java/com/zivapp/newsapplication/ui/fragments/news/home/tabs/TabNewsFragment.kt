@@ -9,13 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.zivapp.newsapplication.R
 import com.zivapp.newsapplication.databinding.FragmentTabNewsBinding
 import com.zivapp.newsapplication.ui.adapters.recyclerAdapters.NewsAdapter
-import com.zivapp.newsapplication.ui.fragments.news.NewsViewModel
 import com.zivapp.newsapplication.ui.paging.pagingAdapter.LoaderStateAdapter
+import com.zivapp.newsapplication.utils.BundleKeys.Companion.ARTICLE
 import com.zivapp.newsapplication.utils.ViewBindingHolder
 import com.zivapp.newsapplication.utils.ViewBindingHolderImpl
 import com.zivapp.newsapplication.utils.setupSwipeRefresh
@@ -38,7 +36,6 @@ class TabNewsFragment(private val _filter: Int) : Fragment(),
         this
     ) {
         setupUi()
-        loadStateListeners()
         collectNews()
     }
 
@@ -63,8 +60,6 @@ class TabNewsFragment(private val _filter: Int) : Fragment(),
             header = LoaderStateAdapter { newsAdapter.retry() },
             footer = LoaderStateAdapter { newsAdapter.retry() },
         )
-
-        layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
     }
 
     private fun setupListeners() = requireBinding {
@@ -72,14 +67,11 @@ class TabNewsFragment(private val _filter: Int) : Fragment(),
             findNavController().navigate(
                 R.id.action_newsViewPagerFragment_to_newsDetailsFragment,
                 Bundle().apply {
-                    putSerializable("article", article)
+                    putSerializable(ARTICLE, article)
                 })
         }
-    }
 
-    private fun loadStateListeners() = requireBinding {
         newsAdapter.addLoadStateListener { loadState ->
-
             rvNews.isVisible = loadState.source.refresh is LoadState.NotLoading
 
             inputPagingLayout.apply {
@@ -126,7 +118,7 @@ class TabNewsFragment(private val _filter: Int) : Fragment(),
     }
 
     private fun swipeToRefresh() {
-        requireBinding().swipeToRefresh.setupSwipeRefresh() {
+        requireBinding().swipeToRefresh.setupSwipeRefresh {
             getEverythingNews()
         }
     }
